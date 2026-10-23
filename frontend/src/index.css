@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#080c15] text-slate-100 min-h-screen antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0f19;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}
+
+/* Modern Accessible Form Validation (modern-web-guidance: validate-input-after-interaction) */
+input:user-invalid,
+textarea:user-invalid,
+select:user-invalid {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.08) !important;
+}
+
+input:user-valid:not(:placeholder-shown),
+textarea:user-valid:not(:placeholder-shown) {
+  border-color: #22c55e !important;
+}
+
+/* Cinema Screen Glow */
+.cinema-screen-curve {
+  position: relative;
+  height: 48px;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.02) 100%);
+  border-top: 3px solid rgba(56, 189, 248, 0.9);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -4px 30px rgba(56, 189, 248, 0.35);
+  transform: perspective(300px) rotateX(-20deg);
+}
+
+/* Pulse animation for seat selection */
+@keyframes seatPop {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.seat-pop {
+  animation: seatPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Cinematic ticket jagged edge / cutouts */
+.ticket-notch-left {
+  position: absolute;
+  left: -12px;
+  top: 68%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #080c15;
+}
+
+.ticket-notch-right {
+  position: absolute;
+  right: -12px;
+  top: 68%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #080c15;
+}
+
+/* Modal backdrop blur */
+.modal-backdrop-blur {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

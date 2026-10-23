@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="logoRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff1e27" />
+      <stop offset="100%" stop-color="#b80710" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Film Reel / Clapper Icon -->
+  <g transform="translate(10, 10)">
+    <!-- Play Badge / Ticket Shape -->
+    <rect x="0" y="2" width="36" height="36" rx="8" fill="url(#logoRedGrad)" />
+    <!-- Film sprocket dots -->
+    <circle cx="7" cy="8" r="2" fill="#ffffff" opacity="0.8"/>
+    <circle cx="7" cy="20" r="2" fill="#ffffff" opacity="0.8"/>
+    <circle cx="7" cy="32" r="2" fill="#ffffff" opacity="0.8"/>
+    <!-- Play arrow -->
+    <polygon points="18,13 30,20 18,27" fill="#ffffff" />
+  </g>
+
+  <!-- Logo Typography -->
+  <text x="56" y="38" fill="url(#logoRedGrad)" font-family="'Inter', system-ui, sans-serif" font-size="28" font-weight="900" letter-spacing="-0.5">I</text>
+  <text x="68" y="38" fill="url(#textGrad)" font-family="'Inter', system-ui, sans-serif" font-size="28" font-weight="900" letter-spacing="1">MOVIES</text>
+  <text x="195" y="26" fill="#f59e0b" font-family="'Inter', system-ui, sans-serif" font-size="9" font-weight="800" letter-spacing="0.5">PLUS</text>
+</svg>

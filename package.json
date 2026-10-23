@@ -1,0 +1,26 @@
+{
+  "name": "imovies",
+  "version": "1.0.0",
+  "description": "IMovies — Premium Full-Stack Movie Ticket Booking Website",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "npm run start:full",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "cd frontend && npm run build",
+    "seed": "cd backend && npm run seed",
+    "start": "cd backend && npm start",
+    "start:full": "node start-full.js"
+  },
+  "keywords": [
+    "movie-ticket-booking",
+    "mern",
+    "phonepe",
+    "razorpay",
+    "express",
+    "react",
+    "mongodb"
+  ],
+  "author": "IMovies Team",
+  "license": "ISC"
+}
