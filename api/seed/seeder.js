@@ -171,8 +171,15 @@ const seedDatabase = async () => {
     console.log('  Admin User: admin@imovies.com / AdminPassword123!');
     console.log('  Demo User:  demo@imovies.com  / Password123!');
     console.log('--------------------------------------------------');
+
+    return {
+      moviesCount: createdMovies.length,
+      cinemasCount: createdCinemas.length,
+      showsCount: showsToInsert.length,
+    };
   } catch (error) {
     console.error('[Seeder Error]:', error);
+    throw error;
   }
 };
 
