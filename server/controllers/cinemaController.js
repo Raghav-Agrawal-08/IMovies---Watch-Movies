@@ -76,9 +76,25 @@ const createCinema = async (req, res, next) => {
   }
 };
 
+// @desc    Delete cinema (Admin)
+// @route   DELETE /api/cinemas/:id
+// @access  Private/Admin
+const deleteCinema = async (req, res, next) => {
+  try {
+    const cinema = await Cinema.findByIdAndDelete(req.params.id);
+    if (!cinema) {
+      return res.status(404).json({ success: false, message: 'Cinema not found' });
+    }
+    res.status(200).json({ success: true, message: 'Cinema deleted successfully.' });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getCinemas,
   getCities,
   getCinemaById,
   createCinema,
+  deleteCinema,
 };

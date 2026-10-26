@@ -121,6 +121,21 @@ export const api = {
       });
       return handleResponse(res);
     },
+    createCinema: async (data) => {
+      const res = await fetch(`${API_BASE}/cinemas`, {
+        method: 'POST',
+        headers: getHeaders(true),
+        body: JSON.stringify(data),
+      });
+      return handleResponse(res);
+    },
+    deleteCinema: async (id) => {
+      const res = await fetch(`${API_BASE}/cinemas/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(true),
+      });
+      return handleResponse(res);
+    },
   },
 
   // Shows

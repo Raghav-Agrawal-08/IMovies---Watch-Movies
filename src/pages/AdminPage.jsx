@@ -18,6 +18,8 @@ import {
   Loader2,
   RefreshCw,
   Search,
+  Building2,
+  MapPin,
 } from 'lucide-react';
 
 export const AdminPage = () => {
@@ -25,7 +27,7 @@ export const AdminPage = () => {
   const { user, isAdmin, isAuthenticated, openAuthModal } = useAuth();
   const { showToast } = useToast();
 
-  const [activeTab, setActiveTab] = useState('bookings'); // 'bookings', 'movies', 'shows'
+  const [activeTab, setActiveTab] = useState('bookings'); // 'bookings', 'movies', 'shows', 'cinemas'
   const [loading, setLoading] = useState(true);
 
   // Stats
@@ -47,6 +49,16 @@ export const AdminPage = () => {
     baseTicketPrice: 280,
     isFeatured: false,
     releaseDate: '2026-10-22',
+  });
+
+  // Add Cinema Modal State
+  const [isAddCinemaModalOpen, setIsAddCinemaModalOpen] = useState(false);
+  const [cinemaForm, setCinemaForm] = useState({
+    name: '',
+    city: 'Mumbai',
+    address: '',
+    screenTypes: ['Standard 2D', 'Dolby Atmos', 'IMAX 3D'],
+    facilities: ['Recliner Seats', 'F&B Service', 'Parking'],
   });
 
   // Schedule Show State
@@ -150,6 +162,42 @@ export const AdminPage = () => {
       const res = await api.movies.deleteMovie(movieId);
       if (res.success) {
         showToast('Movie deleted.', 'info');
+        loadAdminData();
+      }
+    } catch (err) {
+      showToast(err.message || 'Delete failed', 'error');
+    }
+  };
+
+  // Add Cinema submit
+  const handleAddCinema = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.cinemas.createCinema(cinemaForm);
+      if (res.success) {
+        showToast('Theatre added successfully!', 'success');
+        setIsAddCinemaModalOpen(false);
+        setCinemaForm({
+          name: '',
+          city: 'Mumbai',
+          address: '',
+          screenTypes: ['Standard 2D', 'Dolby Atmos', 'IMAX 3D'],
+          facilities: ['Recliner Seats', 'F&B Service', 'Parking'],
+        });
+        loadAdminData();
+      }
+    } catch (err) {
+      showToast(err.message || 'Failed to add theatre', 'error');
+    }
+  };
+
+  // Delete cinema
+  const handleDeleteCinema = async (cinemaId) => {
+    if (!window.confirm('Are you sure you want to delete this theatre?')) return;
+    try {
+      const res = await api.cinemas.deleteCinema(cinemaId);
+      if (res.success) {
+        showToast('Theatre removed.', 'info');
         loadAdminData();
       }
     } catch (err) {
@@ -320,6 +368,16 @@ export const AdminPage = () => {
           }`}
         >
           Schedule Shows
+        </button>
+        <button
+          onClick={() => setActiveTab('cinemas')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'cinemas'
+              ? 'bg-red-600 text-white shadow-md'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
+          Theatres &amp; Screens ({cinemas.length})
         </button>
       </div>
 
@@ -644,6 +702,94 @@ export const AdminPage = () => {
         </div>
       )}
 
+      {/* TAB 4: THEATRES / CINEMAS MANAGEMENT */}
+      {activeTab === 'cinemas' && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-black text-white">
+                Theatres &amp; Cinema Halls ({cinemas.length})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Manage cinema hubs, screens, formats, and amenities
+              </p>
+            </div>
+            <button
+              onClick={() => setIsAddCinemaModalOpen(true)}
+              className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold flex items-center gap-2 transition"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add New Theatre</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {cinemas.map((c) => (
+              <div
+                key={c._id}
+                className="p-5 rounded-3xl bg-[#0f172a] border border-slate-800 flex flex-col justify-between space-y-4 shadow-lg"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 rounded-xl bg-red-500/10 text-red-400">
+                        <Building2 className="w-4 h-4" />
+                      </div>
+                      <h4 className="font-extrabold text-white text-sm line-clamp-1">{c.name}</h4>
+                    </div>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
+                      {c.city}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-400 flex items-start gap-1.5 pt-1">
+                    <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
+                    <span className="line-clamp-2">{c.address}</span>
+                  </p>
+
+                  <div className="pt-2 space-y-1.5">
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      Screen Formats
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {c.screenTypes?.map((st) => (
+                        <span
+                          key={st}
+                          className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20"
+                        >
+                          {st}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {c.facilities?.length > 0 && (
+                    <div className="pt-1">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                        Amenities
+                      </div>
+                      <p className="text-[11px] text-slate-400">
+                        {c.facilities.join(' • ')}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-end">
+                  <button
+                    onClick={() => handleDeleteCinema(c._id)}
+                    className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 transition font-semibold"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete Theatre</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ADD MOVIE MODAL */}
       {isAddMovieModalOpen && (
         <div
@@ -770,6 +916,107 @@ export const AdminPage = () => {
                   className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold"
                 >
                   Save Movie
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ADD CINEMA MODAL */}
+      {isAddCinemaModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 modal-backdrop-blur"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsAddCinemaModalOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-lg bg-[#0f172a] border border-slate-700 rounded-3xl p-6 sm:p-8 space-y-4 max-h-[85vh] overflow-y-auto">
+            <h3 className="text-lg font-black text-white">Add New Cinema / Theatre</h3>
+            <form onSubmit={handleAddCinema} className="space-y-3 text-xs">
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1">Theatre Name *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. PVR INOX: Phoenix Palladium"
+                  value={cinemaForm.name}
+                  onChange={(e) => setCinemaForm({ ...cinemaForm, name: e.target.value })}
+                  className="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1">City *</label>
+                <select
+                  value={cinemaForm.city}
+                  onChange={(e) => setCinemaForm({ ...cinemaForm, city: e.target.value })}
+                  className="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none"
+                >
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Delhi-NCR">Delhi-NCR</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1">Full Address *</label>
+                <textarea
+                  required
+                  rows={2}
+                  placeholder="e.g. 462 Senapati Bapat Marg, Lower Parel, Mumbai"
+                  value={cinemaForm.address}
+                  onChange={(e) => setCinemaForm({ ...cinemaForm, address: e.target.value })}
+                  className="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-300 mb-1">Supported Screen Formats</label>
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  {['IMAX 3D', 'Dolby Atmos', '4DX', 'ScreenX', 'Standard 2D'].map((fmt) => (
+                    <label key={fmt} className="flex items-center gap-2 text-slate-300">
+                      <input
+                        type="checkbox"
+                        checked={cinemaForm.screenTypes.includes(fmt)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setCinemaForm({
+                              ...cinemaForm,
+                              screenTypes: [...cinemaForm.screenTypes, fmt],
+                            });
+                          } else {
+                            setCinemaForm({
+                              ...cinemaForm,
+                              screenTypes: cinemaForm.screenTypes.filter((t) => t !== fmt),
+                            });
+                          }
+                        }}
+                        className="rounded text-red-600 focus:ring-0"
+                      />
+                      <span>{fmt}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setIsAddCinemaModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold"
+                >
+                  Save Theatre
                 </button>
               </div>
             </form>

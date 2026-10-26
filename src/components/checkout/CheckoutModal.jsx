@@ -102,7 +102,7 @@ export const CheckoutModal = ({
       showToast('UPI Reference submitted. Ticket is pending verification.', 'success');
       onBookingConfirmed(res.data);
       onClose();
-      navigate('/my-tickets');
+      navigate(`/booking-confirmation/${booking._id}`);
     } catch (err) {
       setErrorMessage(err.message || 'Failed to submit UPI reference.');
       showToast(err.message || 'Submission error', 'error');
@@ -155,7 +155,7 @@ export const CheckoutModal = ({
               showToast('Payment verified successfully! Tickets confirmed.', 'success');
               onBookingConfirmed(verifyRes.booking);
               onClose();
-              navigate('/my-tickets');
+              navigate(`/booking-confirmation/${booking._id}`);
             }
           } catch (err) {
             setErrorMessage('Payment verification failed on the server.');
@@ -197,7 +197,7 @@ export const CheckoutModal = ({
         showToast('[Demo Mode] Payment simulated! Tickets confirmed.', 'success');
         onBookingConfirmed(res.booking);
         onClose();
-        navigate('/my-tickets');
+        navigate(`/booking-confirmation/${booking._id}`);
       } else {
         showToast('[Demo Mode] Payment declined. Seats released.', 'error');
         onClose();

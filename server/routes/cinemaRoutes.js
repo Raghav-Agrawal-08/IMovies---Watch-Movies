@@ -5,6 +5,7 @@ const {
   getCities,
   getCinemaById,
   createCinema,
+  deleteCinema,
 } = require('../controllers/cinemaController');
 const { protect } = require('../middleware/auth');
 const { adminOnly } = require('../middleware/admin');
@@ -15,5 +16,6 @@ router.get('/:id', getCinemaById);
 
 // Admin routes
 router.post('/', protect, adminOnly, createCinema);
+router.delete('/:id', protect, adminOnly, deleteCinema);
 
 module.exports = router;

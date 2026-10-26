@@ -10,6 +10,7 @@ import { MovieDetailsPage } from './pages/MovieDetailsPage';
 import { MyTicketsPage } from './pages/MyTicketsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { AdminPage } from './pages/AdminPage';
+import { BookingConfirmationPage } from './pages/BookingConfirmationPage';
 import { AuthLandingPage } from './pages/AuthLandingPage';
 import { useAuth } from './context/AuthContext';
 import { Film } from 'lucide-react';
@@ -47,6 +48,7 @@ export function App() {
           <Route path="/" element={<HomePage searchQuery={searchQuery} />} />
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
           <Route path="/my-tickets" element={<MyTicketsPage />} />
+          <Route path="/booking-confirmation/:id" element={<BookingConfirmationPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
