@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node server.js",
-    "seed": "node api/seed/seeder.js"
+    "seed": "node server/seed/seeder.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

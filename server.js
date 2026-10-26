@@ -1,4 +1,4 @@
-const app = require('./api/index');
+const app = require('./server/app');
 const path = require('path');
 const express = require('express');
 
@@ -13,7 +13,7 @@ app.use(express.static(distPath));
 
 // Fallback for Single Page Application routing (non-API routes)
 app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) {
+  if (req.path.startsWith('/api') || req.path.startsWith('/health')) {
     return next();
   }
   const indexPath = path.join(distPath, 'index.html');
@@ -26,11 +26,15 @@ app.get('*', (req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`  🎬 IMovies Full-Stack App running on port ${PORT}`);
-  console.log(`  🌐 Local App & API: http://localhost:${PORT}`);
-  console.log(`  🩺 Health check:    http://localhost:${PORT}/api/health`);
-  console.log(`  🌱 Atlas Seeder:    http://localhost:${PORT}/api/seed/status`);
-  console.log(`====================================================`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`  🎬 IMovies Full-Stack App running on port ${PORT}`);
+    console.log(`  🌐 Local App & API: http://localhost:${PORT}`);
+    console.log(`  🩺 Health check:    http://localhost:${PORT}/api/health`);
+    console.log(`  🌱 Atlas Seeder:    http://localhost:${PORT}/api/seed/status`);
+    console.log(`====================================================`);
+  });
+}
+
+module.exports = app;
