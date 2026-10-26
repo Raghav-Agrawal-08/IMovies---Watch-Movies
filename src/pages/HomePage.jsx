@@ -79,20 +79,20 @@ export const HomePage = ({ searchQuery }) => {
         )}
 
         {/* Section Header: Explore Films in City */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-800/60">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/60">
           <div>
             <div className="flex items-center gap-2">
-              <Film className="w-5 h-5 text-red-500" />
-              <h2 className="text-2xl sm:text-3xl font-black text-white">
+              <Film className="w-5 h-5 text-red-600" />
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
                 {searchQuery ? `Search Results for "${searchQuery}"` : `Now Showing in ${currentCity}`}
               </h2>
             </div>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Select any movie to browse auditoriums, showtimes, and reserve your seats
             </p>
           </div>
 
-          <div className="text-xs text-slate-400 font-semibold bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-slate-800 self-start sm:self-auto">
+          <div className="text-xs text-slate-700 dark:text-slate-300 font-semibold bg-slate-100 dark:bg-slate-900/80 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 self-start sm:self-auto shadow-sm">
             {movies.length} {movies.length === 1 ? 'Movie' : 'Movies'} Available
           </div>
         </div>

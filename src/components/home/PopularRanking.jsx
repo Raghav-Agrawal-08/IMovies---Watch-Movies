@@ -12,15 +12,15 @@ export const PopularRanking = ({ rankingMovies = [] }) => {
       {/* Section Header with Clear Sample Disclaimer */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-red-500/20 text-amber-400 border border-amber-500/30">
+          <div className="p-2 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
               Trending &amp; Popular Movies
             </h2>
-            <div className="flex items-center gap-1.5 text-xs text-slate-400">
-              <Info className="w-3.5 h-3.5 text-amber-400" />
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+              <Info className="w-3.5 h-3.5 text-amber-500" />
               <span>Sample Curated Ranking (Demo Dataset)</span>
             </div>
           </div>
@@ -35,10 +35,10 @@ export const PopularRanking = ({ rankingMovies = [] }) => {
             <div
               key={movie._id || index}
               onClick={() => navigate(`/movie/${movie._id}`)}
-              className="relative flex-none w-56 sm:w-64 bg-[#0f172a] rounded-3xl p-3 border border-slate-800/80 hover:border-slate-700 transition cursor-pointer group snap-start shadow-lg hover:shadow-red-950/20"
+              className="relative flex-none w-56 sm:w-64 bg-white dark:bg-[#0f172a] rounded-3xl p-3 border border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 transition cursor-pointer group snap-start shadow-sm hover:shadow-xl"
             >
               {/* Big Cinematic Rank Number Overlay */}
-              <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-900 mb-3">
+              <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900 mb-3">
                 <img
                   src={movie.posterUrl}
                   alt={movie.title}
@@ -63,15 +63,15 @@ export const PopularRanking = ({ rankingMovies = [] }) => {
 
               {/* Title & Info */}
               <div className="px-1 space-y-1">
-                <h4 className="text-sm font-extrabold text-white group-hover:text-red-400 transition-colors truncate">
+                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors truncate">
                   {movie.title}
                 </h4>
-                <p className="text-xs text-slate-400 truncate">
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                   {movie.genres?.slice(0, 2).join(' • ')}
                 </p>
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] text-slate-500">{movie.language}</span>
-                  <span className="text-xs font-bold text-slate-300">₹{movie.baseTicketPrice}</span>
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500">{movie.language}</span>
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">₹{movie.baseTicketPrice}</span>
                 </div>
               </div>
             </div>

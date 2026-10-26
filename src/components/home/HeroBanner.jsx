@@ -82,7 +82,7 @@ export const HeroBanner = ({ featuredMovies = [] }) => {
                 }`}>
                   {/* Badges Strip */}
                   <div className="flex flex-wrap items-center gap-2.5 text-xs font-semibold">
-                    <span className="px-3.5 py-1 rounded-full bg-gradient-to-r from-red-600 to-rose-600 text-white tracking-wider uppercase text-[11px] font-black shadow-lg shadow-red-600/50">
+                    <span className="px-3.5 py-1 rounded-full bg-red-600 text-white tracking-wider uppercase text-[11px] font-black shadow-md shadow-red-600/30">
                       NOW SHOWING IN CINEMAS
                     </span>
                     <span className="px-2.5 py-1 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700/80 backdrop-blur-md">
@@ -121,7 +121,7 @@ export const HeroBanner = ({ featuredMovies = [] }) => {
                   <div className="flex items-center gap-4 pt-3">
                     <button
                       onClick={() => navigate(`/movie/${movie._id}`)}
-                      className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-black text-sm shadow-xl shadow-red-600/40 flex items-center gap-2.5 transition-all transform active:scale-95 group"
+                      className="px-7 py-3.5 rounded-2xl bg-red-600 hover:bg-red-500 text-white font-black text-sm shadow-lg shadow-red-600/30 flex items-center gap-2.5 transition-all transform active:scale-95 group"
                     >
                       <Ticket className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                       <span>Book Tickets Now</span>
